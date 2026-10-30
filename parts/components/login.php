@@ -45,10 +45,20 @@
                 <input type="password" name="password" autocomplete="new-password" minlength="8" required placeholder="Passwort (mind. 8 Zeichen)">
             </label>
             <label class="field">
-                <span class="visually-hidden">Deine Adresse</span>
-                <input type="text" name="address" autocomplete="street-address" required placeholder="Deine Adresse (Straße, PLZ, Ort)">
+                <span class="visually-hidden">Straße</span>
+                <input type="text" name="street" autocomplete="off" required placeholder="Straße (ohne Hausnummer)">
             </label>
-            <p class="hint">Deine Adresse wird nur genutzt, um den Treffpunkt zu berechnen. Andere sehen sie nicht.</p>
+            <div class="field-row">
+                <label class="field">
+                    <span class="visually-hidden">PLZ</span>
+                    <input type="text" name="zip" autocomplete="postal-code" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" required placeholder="PLZ">
+                </label>
+                <label class="field">
+                    <span class="visually-hidden">Ort</span>
+                    <input type="text" name="city" autocomplete="address-level2" required placeholder="Ort">
+                </label>
+            </div>
+            <p class="hint">Nur Straße, PLZ und Ort, keine Hausnummer: Das reicht, um den Treffpunkt zu berechnen. Andere sehen es nicht.</p>
 
             <button class="cta cta--primary" type="submit">Registrieren</button>
         </form>

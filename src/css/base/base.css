@@ -314,6 +314,13 @@ textarea {
     }
 }
 
+/* PLZ + Ort side by side (home address) */
+.field-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    gap: var(--sp-2);
+}
+
 textarea {
     resize: vertical;
     font-family: inherit;

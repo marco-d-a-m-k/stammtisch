@@ -137,16 +137,22 @@ function st_settings_page()
 foreach (['show_user_profile', 'edit_user_profile'] as $st_hook) {
     add_action($st_hook, function ($user) {
         if (!current_user_can('edit_user', $user->ID)) return;
-        $loc = st_get_location('user', $user->ID);
+        $loc  = st_get_location('user', $user->ID);
+        $home = st_home_address_parts($user->ID);
 ?>
         <h2>Stammtisch</h2>
         <table class="form-table" role="presentation">
             <tr>
-                <th><label for="st_address">Adresse</label></th>
+                <th><label for="st_street">Straße</label></th>
+                <td><input type="text" id="st_street" name="street" value="<?= esc_attr($home['street']) ?>" class="regular-text"></td>
+            </tr>
+            <tr>
+                <th><label for="st_zip">PLZ / Ort</label></th>
                 <td>
-                    <input type="text" id="st_address" name="st_address" value="<?= esc_attr($loc['address'] ?? '') ?>" class="regular-text">
+                    <input type="text" id="st_zip" name="zip" value="<?= esc_attr($home['zip']) ?>" class="small-text" maxlength="5" inputmode="numeric">
+                    <input type="text" name="city" value="<?= esc_attr($home['city']) ?>" aria-label="Ort">
                     <p class="description">
-                        Wird beim Speichern neu in Koordinaten umgewandelt (ohne Hausnummer).
+                        Ohne Hausnummer (wird sonst entfernt). Beim Speichern neu in Koordinaten umgewandelt.
                         <?php if ($loc) : ?>Aktuell: <?= esc_html(round($loc['lat'], 5) . ', ' . round($loc['lng'], 5)) ?><?php endif; ?>
                     </p>
                 </td>
@@ -158,17 +164,19 @@ foreach (['show_user_profile', 'edit_user_profile'] as $st_hook) {
 
 foreach (['personal_options_update', 'edit_user_profile_update'] as $st_hook) {
     add_action($st_hook, function ($user_id) {
-        if (!current_user_can('edit_user', $user_id) || !isset($_POST['st_address'])) return;
+        if (!current_user_can('edit_user', $user_id) || !isset($_POST['street'])) return;
+        if (trim(wp_unslash($_POST['street'])) === '') return;
 
-        $address = sanitize_text_field(wp_unslash($_POST['st_address']));
+        $home    = st_home_address_from_post();
+        $typed   = wp_unslash($_POST['street'] . ', ' . ($_POST['zip'] ?? '') . ' ' . ($_POST['city'] ?? ''));
         $current = st_get_location('user', $user_id);
-        if (!$address || ($current && $current['address'] === $address)) return;
+        if ($home && $current && $current['address'] === $home['address'] && get_user_meta($user_id, 'st_street', true) !== '') return;
 
-        $geo = st_geocode($address, true);
+        $geo = $home ? st_geocode($home['address']) : null;
         if ($geo) {
-            st_set_location('user', $user_id, $address, $geo);
+            st_set_home_address($user_id, $home, $geo);
         } else {
-            set_transient('st_address_error_' . get_current_user_id(), $address, 60);
+            set_transient('st_address_error_' . get_current_user_id(), sanitize_text_field($typed), 60);
         }
     });
 }

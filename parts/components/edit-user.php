@@ -1,6 +1,6 @@
 <?php
 $st_user = wp_get_current_user();
-$st_loc  = st_get_location('user', $st_user->ID);
+$st_home = st_home_address_parts($st_user->ID);
 ?>
 
 <section class="sp-6">
@@ -20,9 +20,20 @@ $st_loc  = st_get_location('user', $st_user->ID);
             <input type="email" name="email" value="<?= esc_attr($st_user->user_email) ?>" autocomplete="email" required placeholder="E-Mail">
         </label>
         <label class="field">
-            <span class="visually-hidden">Deine Adresse</span>
-            <input type="text" name="address" value="<?= esc_attr($st_loc['address'] ?? '') ?>" autocomplete="street-address" required placeholder="Deine Adresse (Straße, PLZ, Ort)">
+            <span class="visually-hidden">Straße</span>
+            <input type="text" name="street" value="<?= esc_attr($st_home['street']) ?>" autocomplete="off" required placeholder="Straße (ohne Hausnummer)">
         </label>
+        <div class="field-row">
+            <label class="field">
+                <span class="visually-hidden">PLZ</span>
+                <input type="text" name="zip" value="<?= esc_attr($st_home['zip']) ?>" autocomplete="postal-code" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" required placeholder="PLZ">
+            </label>
+            <label class="field">
+                <span class="visually-hidden">Ort</span>
+                <input type="text" name="city" value="<?= esc_attr($st_home['city']) ?>" autocomplete="address-level2" required placeholder="Ort">
+            </label>
+        </div>
+        <p class="hint">Ohne Hausnummer, die brauchen wir nicht.</p>
         <label class="field">
             <span class="visually-hidden">Neues Passwort</span>
             <input type="password" name="password" autocomplete="new-password" minlength="8" placeholder="Neues Passwort (leer lassen, um es zu behalten)">

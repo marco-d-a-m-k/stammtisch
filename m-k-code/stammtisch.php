@@ -211,6 +211,80 @@ function st_set_location($type, $id, $address, $geo)
     update_metadata($type, $id, 'st_lng', $geo['lng']);
 }
 
+
+// ---- Home address: street (no house number), postcode, city ----
+// Members' addresses are never stored with a house number: street level is
+// enough to pick a bar, and what isn't stored can't leak.
+
+// From the form fields. Returns null if incomplete or the postcode is invalid;
+// 'stripped' says whether a typed house number was removed.
+function st_home_address($street, $zip, $city)
+{
+    $typed  = sanitize_text_field($street);
+    $street = st_strip_house_number($typed);
+    $zip    = preg_replace('/\s+/', '', sanitize_text_field($zip));
+    $city   = sanitize_text_field($city);
+    if ($street === '' || $city === '' || !preg_match('/^\d{5}$/', $zip)) return null;
+
+    return [
+        'street'   => $street,
+        'zip'      => $zip,
+        'city'     => $city,
+        'address'  => "$street, $zip $city",
+        'stripped' => $street !== trim($typed),
+    ];
+}
+
+// Same, read from $_POST (fields street / zip / city)
+function st_home_address_from_post()
+{
+    return st_home_address(
+        wp_unslash($_POST['street'] ?? ''),
+        wp_unslash($_POST['zip'] ?? ''),
+        wp_unslash($_POST['city'] ?? '')
+    );
+}
+
+function st_set_home_address($user_id, $home, $geo)
+{
+    st_set_location('user', $user_id, $home['address'], $geo);
+    foreach (['street', 'zip', 'city'] as $part) update_user_meta($user_id, "st_$part", $home[$part]);
+}
+
+// For the forms: ['street', 'zip', 'city']. Older free-text addresses are parsed.
+function st_home_address_parts($user_id)
+{
+    $parts = array_map(fn($part) => (string) get_user_meta($user_id, "st_$part", true), ['street' => 'street', 'zip' => 'zip', 'city' => 'city']);
+    if ($parts['street'] !== '') return $parts;
+
+    $address = (string) get_user_meta($user_id, 'st_address', true);
+    if (preg_match('/^(.*?),?\s*(\d{5})\s+(.+)$/u', $address, $m)) {
+        return ['street' => st_strip_house_number($m[1]), 'zip' => $m[2], 'city' => trim($m[3])];
+    }
+    return ['street' => st_strip_house_number($address), 'zip' => '', 'city' => ''];
+}
+
+// One-time cleanup: drop house numbers from addresses saved before this
+// existed, and look them up again (street level). Runs once in WP-Admin.
+add_action('admin_init', function () {
+    if (!current_user_can('manage_options') || !add_option('st_home_address_v2', time(), '', false)) return;
+
+    foreach (get_users(['meta_key' => 'st_address', 'fields' => 'ID']) as $user_id) {
+        if (get_user_meta($user_id, 'st_street', true) !== '') continue;
+
+        $parts = st_home_address_parts($user_id);
+        $home  = st_home_address($parts['street'], $parts['zip'], $parts['city']);
+        $geo   = $home ? st_geocode($home['address']) : null;
+
+        if ($geo) {
+            st_set_home_address($user_id, $home, $geo);
+        } else {
+            // Not parseable or not found: keep the coordinates, but store the address without number
+            update_user_meta($user_id, 'st_address', st_strip_house_number((string) get_user_meta($user_id, 'st_address', true)));
+        }
+    }
+});
+
 // Great-circle distance in km
 function st_distance($a, $b)
 {
@@ -460,13 +534,16 @@ function st_messages()
 {
     return [
         'signed_up'       => ['Willkommen! Du bist registriert.', 'success'],
+        'signed_up_nonr'  => ['Willkommen! Du bist registriert. Die Hausnummer haben wir weggelassen, die brauchen wir nicht.', 'success'],
+        'invalid_zip'     => ['Bitte eine gültige Postleitzahl (5 Ziffern) angeben.', 'error'],
         'login_failed'    => ['Benutzername oder Passwort falsch.', 'error'],
         'missing_fields'  => ['Bitte alle Felder ausfüllen.', 'error'],
         'invalid_email'   => ['Diese E-Mail-Adresse ist ungültig.', 'error'],
         'user_exists'     => ['Benutzername oder E-Mail ist bereits vergeben.', 'error'],
         'weak_password'   => ['Das Passwort muss mindestens 8 Zeichen haben.', 'error'],
-        'address_unknown' => ['Diese Adresse konnten wir nicht finden. Bitte mit Straße, PLZ und Ort angeben.', 'error'],
+        'address_unknown' => ['Diese Straße konnten wir nicht finden. Bitte Straße, PLZ und Ort prüfen.', 'error'],
         'profile_saved'   => ['Profil gespeichert.', 'success'],
+        'profile_saved_nonr' => ['Profil gespeichert. Die Hausnummer haben wir weggelassen, die brauchen wir nicht.', 'success'],
         'account_deleted' => ['Dein Konto wurde gelöscht.', 'success'],
         'bar_added'       => ['Bar hinzugefügt.', 'success'],
         'bar_deleted'     => ['Bar gelöscht.', 'success'],

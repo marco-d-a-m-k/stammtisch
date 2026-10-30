@@ -31,7 +31,7 @@ $legal_email   = st_setting('imprint_email');
 
         <div class="card sp-4">
             <h2>Was wird gespeichert?</h2>
-            <p>Wenn du dich registrierst: Benutzername, E-Mail-Adresse, Passwort (verschlüsselt) und deine Adresse. Dazu kommen deine Zu- und Absagen und die Bars, die du einträgst.</p>
+            <p>Wenn du dich registrierst: Benutzername, E-Mail-Adresse, Passwort (verschlüsselt) und Straße, PLZ und Ort. Eine Hausnummer wird nicht gespeichert. Dazu kommen deine Zu- und Absagen und die Bars, die du einträgst.</p>
             <p>Andere Mitglieder sehen deinen Namen und ob du dabei bist. Deine Adresse und E-Mail sieht niemand außer dem Admin.</p>
         </div>
 
@@ -42,7 +42,7 @@ $legal_email   = st_setting('imprint_email');
 
         <div class="card sp-4">
             <h2>Wer bekommt Daten?</h2>
-            <p>Um Adressen in Koordinaten umzuwandeln und Fahrzeiten zu berechnen, nutzt der Server den freien Dienst Transitous. Von deiner Adresse gehen nur Straße, PLZ und Ort raus, ohne Hausnummer. Transitous bekommt weder deinen Namen noch deine E-Mail-Adresse, und die Anfrage kommt vom Server, nicht von deinem Gerät.</p>
+            <p>Um Adressen in Koordinaten umzuwandeln und Fahrzeiten zu berechnen, nutzt der Server den freien Dienst Transitous. Dabei geht nur raus, was auch gespeichert ist: Straße, PLZ und Ort. Transitous bekommt weder deinen Namen noch deine E-Mail-Adresse, und die Anfrage kommt vom Server, nicht von deinem Gerät.</p>
             <p>Der Link „Auf der Karte zeigen“ öffnet Google Maps. Dabei gilt der Datenschutz von Google, aber übergeben wird nur die Adresse der Bar.</p>
             <p>Sonst werden keine Daten weitergegeben.</p>
         </div>
@@ -54,7 +54,7 @@ $legal_email   = st_setting('imprint_email');
 
         <div class="card sp-4">
             <h2>Löschen und deine Rechte</h2>
-            <p>Unter Profil kannst du dein Konto jederzeit selbst löschen. Dann sind deine Daten, Adresse und Zusagen weg. Eingetragene Bars bleiben für die anderen erhalten.</p>
+            <p>Unter Profil kannst du dein Konto jederzeit selbst löschen. Dann sind deine Daten, Straße, PLZ, Ort und Zusagen weg. Eingetragene Bars bleiben für die anderen erhalten.</p>
             <p>Du kannst Auskunft über deine Daten verlangen und sie berichtigen oder löschen lassen. Beschweren kannst du dich bei der Berliner Beauftragten für Datenschutz und Informationsfreiheit.</p>
         </div>
 

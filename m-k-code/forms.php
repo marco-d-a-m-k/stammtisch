@@ -11,14 +11,15 @@ add_action('admin_post_nopriv_st_signup', function () {
     $username = sanitize_user($_POST['username'] ?? '', true);
     $email    = sanitize_email($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
-    $address  = sanitize_text_field($_POST['address'] ?? '');
+    $home     = st_home_address_from_post();
 
-    if (!$username || !$email || !$password || !$address) st_back('missing_fields');
+    if (!$username || !$email || !$password || empty($_POST['street']) || empty($_POST['city'])) st_back('missing_fields');
+    if (!$home) st_back('invalid_zip');
     if (!is_email($email)) st_back('invalid_email');
     if (username_exists($username) || email_exists($email)) st_back('user_exists');
     if (strlen($password) < 8) st_back('weak_password');
 
-    $geo = st_geocode($address, true);
+    $geo = st_geocode($home['address']);
     if (!$geo) st_back('address_unknown');
 
     $user_id = wp_insert_user([
@@ -29,9 +30,9 @@ add_action('admin_post_nopriv_st_signup', function () {
     ]);
     if (is_wp_error($user_id)) st_back('user_exists');
 
-    st_set_location('user', $user_id, $address, $geo);
+    st_set_home_address($user_id, $home, $geo);
     wp_set_auth_cookie($user_id, true);
-    st_back('signed_up');
+    st_back($home['stripped'] ? 'signed_up_nonr' : 'signed_up');
 });
 
 
@@ -55,10 +56,11 @@ add_action('admin_post_st_profile', function () {
 
     $user_id  = get_current_user_id();
     $email    = sanitize_email($_POST['email'] ?? '');
-    $address  = sanitize_text_field($_POST['address'] ?? '');
+    $home     = st_home_address_from_post();
     $password = $_POST['password'] ?? '';
 
-    if (!$email || !$address) st_back('missing_fields', 'profile');
+    if (!$email || empty($_POST['street']) || empty($_POST['city'])) st_back('missing_fields', 'profile');
+    if (!$home) st_back('invalid_zip', 'profile');
     if (!is_email($email)) st_back('invalid_email', 'profile');
 
     $owner = email_exists($email);
@@ -66,10 +68,10 @@ add_action('admin_post_st_profile', function () {
     if ($password && strlen($password) < 8) st_back('weak_password', 'profile');
 
     $current = st_get_location('user', $user_id);
-    if (!$current || $current['address'] !== $address) {
-        $geo = st_geocode($address, true);
+    if (!$current || $current['address'] !== $home['address']) {
+        $geo = st_geocode($home['address']);
         if (!$geo) st_back('address_unknown', 'profile');
-        st_set_location('user', $user_id, $address, $geo);
+        st_set_home_address($user_id, $home, $geo);
     }
 
     $data = ['ID' => $user_id, 'user_email' => $email];
@@ -79,7 +81,7 @@ add_action('admin_post_st_profile', function () {
     // Changing the password logs the user out, so log them back in
     if ($password) wp_set_auth_cookie($user_id, true);
 
-    st_back('profile_saved', 'profile');
+    st_back($home['stripped'] ? 'profile_saved_nonr' : 'profile_saved', 'profile');
 });
 
 
