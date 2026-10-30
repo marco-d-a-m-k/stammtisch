@@ -1,0 +1,93 @@
+[
+    {
+        "key": "group_6729018f64929",
+        "title": "SEO",
+        "fields": [
+            {
+                "key": "field_6ab42797fb05a",
+                "label": "SEO",
+                "name": "",
+                "aria-label": "",
+                "type": "accordion",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "open": 0,
+                "multi_expand": 0,
+                "endpoint": 0
+            },
+            {
+                "key": "field_6729018f57be1",
+                "label": "Meta Title",
+                "name": "meta-title",
+                "aria-label": "",
+                "type": "textarea",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": 60,
+                "allow_in_bindings": 1,
+                "rows": 2,
+                "placeholder": "",
+                "new_lines": ""
+            },
+            {
+                "key": "field_672901b54acbe",
+                "label": "Meta Description",
+                "name": "meta-descr",
+                "aria-label": "",
+                "type": "textarea",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": 160,
+                "allow_in_bindings": 1,
+                "rows": 3,
+                "placeholder": "",
+                "new_lines": ""
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "page"
+                }
+            ],
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "post"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "acf_after_title",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0
+    }
+]

@@ -1,0 +1,32 @@
+{
+    "name": "project-name",
+    "version": "1.0.0",
+    "main": "index.js",
+    "engines": {
+        "node": ">=18"
+    },
+    "browserslist": [
+        "defaults"
+    ],
+    "scripts": {
+        "watch": "cross-env NODE_ENV=development concurrently \"postcss src/css/style.css -d build --watch\" \"webpack --watch\"",
+        "build": "cross-env NODE_ENV=production concurrently \"postcss src/css/style.css -d build\" \"webpack\""
+    },
+    "author": "d-a-m-k",
+    "devDependencies": {
+        "@babel/core": "latest",
+        "@babel/preset-env": "latest",
+        "babel-loader": "latest",
+        "concurrently": "latest",
+        "cross-env": "latest",
+        "cssnano": "latest",
+        "glob": "latest",
+        "postcss": "latest",
+        "postcss-cli": "latest",
+        "postcss-import": "latest",
+        "postcss-nested": "latest",
+        "postcss-preset-env": "latest",
+        "webpack": "latest",
+        "webpack-cli": "latest"
+    }
+}

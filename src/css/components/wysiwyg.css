@@ -1,0 +1,70 @@
+.wysiwyg {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+
+    :is(h1, h2, h3, h4, h5, h6) {
+        line-height: 1.5;
+    }
+
+    & ol {
+        list-style: decimal;
+        list-style-position: inside;
+
+        display: flex;
+        flex-direction: column;
+        gap: var(--sp-2);
+    }
+
+    & ul {
+        list-style: disc;
+        list-style-position: inside;
+
+        display: flex;
+        flex-direction: column;
+        gap: var(--sp-2);
+    }
+
+    & :is(ol, ul) {
+        & li {
+            hyphens: auto;
+
+            &::marker {
+                width: 2em;
+            }
+        }
+    }
+
+    a {
+        color: var(--clr-mid-grey);
+
+        &:is(:hover, :focus-visible) {
+            color: var(--clr-dark-grey);
+
+            & path {
+                fill: var(--clr-dark-grey);
+            }
+        }
+
+        &:active {
+            color: var(--clr-mid-grey);
+
+            & path {
+                fill: var(--clr-mid-grey);
+            }
+        }
+    }
+
+    strong {
+        font-weight: bold;
+    }
+
+    oblique,
+    em {
+        font-style: italic;
+    }
+
+    blockquote {
+        font-style: italic;
+    }
+}

@@ -1,0 +1,43 @@
+@font-face {
+    font-family: "ABC Areal";
+    src: url("../load/fonts/ABCArealSuperfamilyVariable.woff2") format("woff2");
+    font-display: swap;
+}
+
+:is(h1, h2, h3, h4, h5, h6) {
+    line-height: 1.04;
+    hyphens: auto;
+    overflow-wrap: break-word;
+    max-width: 100%;
+}
+
+.fs-10 {
+    font-size: var(--fs-10);
+    letter-spacing: -0.02em;
+}
+
+.fs-8 {
+    font-size: var(--fs-8);
+    letter-spacing: -0.01em;
+}
+
+.fs-6 {
+    font-size: var(--fs-6);
+}
+
+.fs-4 {
+    font-size: var(--fs-4);
+}
+
+.fs-2 {
+    font-size: var(--fs-2);
+    letter-spacing: 0.02em;
+}
+
+.up {
+    text-transform: uppercase;
+}
+
+.center {
+    text-align: center;
+}

@@ -1,0 +1,85 @@
+:root {
+    /* Colors */
+
+    --clr-white: #fff;
+    --clr-black: #191919;
+    --clr-light-grey: #f0ecf1;
+    --clr-mid-grey: #c2bdc4;
+
+    /* Font 375px — 1800px */
+
+    --ff-main: "ABC Areal", system-ui, sans-serif;
+
+    --fv-reg-reg: "DRKM" 0, "MONO" 0, "slnt" 0, "wght" 400;
+    --fv-reg-reg-italic: "DRKM" 0, "MONO" 0, "slnt" -10, "wght" 400;
+    --fv-reg-bold: "DRKM" 0, "MONO" 0, "slnt" 0, "wght" 700;
+    --fv-reg-bold-italic: "DRKM" 0, "MONO" 0, "slnt" -10, "wght" 700;
+
+    --fv-semi-reg: "DRKM" 0, "MONO" 50, "slnt" 0, "wght" 400;
+    --fv-semi-reg-italic: "DRKM" 0, "MONO" 50, "slnt" -10, "wght" 400;
+    --fv-semi-bold: "DRKM" 0, "MONO" 50, "slnt" 0, "wght" 700;
+    --fv-semi-bold-italic: "DRKM" 0, "MONO" 50, "slnt" -10, "wght" 700;
+
+    --fv-mono-reg: "DRKM" 0, "MONO" 100, "slnt" 0, "wght" 400;
+    --fv-mono-reg-italic: "DRKM" 0, "MONO" 100, "slnt" -10, "wght" 400;
+    --fv-mono-bold: "DRKM" 0, "MONO" 100, "slnt" 0, "wght" 700;
+    --fv-mono-bold-italic: "DRKM" 0, "MONO" 100, "slnt" -10, "wght" 700;
+
+    --fs-10: clamp(3rem, 2.884rem + 0.4912vw, 3.4375rem);
+    --fs-8: clamp(1.875rem, 1.809rem + 0.28vw, 2.125rem);
+    --fs-6: clamp(1.5625rem, 1.546rem + 0.07vw, 1.625rem);
+    --fs-4: clamp(1.4375rem, 1.421rem + 0.07vw, 1.5rem);
+    --fs-2: clamp(0.875rem, 0.8421rem + 0.14035087719298245vw, 1rem);
+
+    /* Spaces 375px — 1800px */
+
+    --sp-10: clamp(2.5rem, 1.842rem + 2.807vw, 5rem);
+    --sp-8: clamp(1.875rem, 1.382rem + 2.105vw, 3.75rem);
+    --sp-6: clamp(1.25rem, 0.921rem + 1.403vw, 2.5rem);
+    --sp-4: clamp(0.625rem, 0.46rem + 0.701vw, 1.25rem);
+    --sp-2: clamp(0.3125rem, 0.23rem + 0.351vw, 0.625rem);
+    --mg-page: clamp(
+        0.625rem,
+        0.13157894736842107rem + 2.1052631578947367vw,
+        2.5rem
+    );
+
+    /* Misc. */
+
+    --r-10: 100px;
+    --r-6: 15px;
+    --r-2: 5px;
+    --pd-cta: 15px 18px;
+
+    --sp-top: var(--mg-page);
+
+    --z-negative: -1;
+    --z-base: unset;
+    --z-mid: 9;
+    --zz-top: 99;
+
+    --ts-5: 500ms ease-in-out;
+    --ts-3: 300ms ease-in-out;
+    --ts-2: 200ms ease-in-out;
+    --ts-1: 100ms ease-in-out;
+
+    font-family: var(--ff-main);
+}
+
+@custom-media --mini-phone (max-width: 320px);
+@custom-media --mobile (max-width: 800px);
+@custom-media --small (max-width: 980px);
+/* Below this, two 400px columns + gap + page margin don't fit (.main) */
+@custom-media --one-col (max-width: 884px);
+@custom-media --not-mobile (min-width: 800px);
+@custom-media --screen (min-width: 1200px);
+
+@view-transition {
+    navigation: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    @view-transition {
+        navigation: none;
+    }
+}

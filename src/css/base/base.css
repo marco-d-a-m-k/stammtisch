@@ -1,0 +1,556 @@
+body {
+    min-height: 100lvh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    min-height: 100vh;
+    margin-bottom: auto;
+}
+
+hr {
+    border: none;
+    background-color: currentColor;
+    height: 1px;
+}
+
+.section {
+    margin: var(--sp-6) var(--mg-page);
+    padding: var(--sp-4);
+
+    &--split {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
+        gap: var(--sp-8);
+
+        @media (--mobile) {
+            grid-template-columns: 1fr;
+        }
+    }
+}
+
+body {
+    background-color: var(--clr-light-grey);
+}
+
+.main {
+    background-color: var(--clr-light-grey);
+
+    padding: var(--mg-page);
+
+    display: grid;
+    grid-template-columns: minmax(0, 400px) minmax(400px, 1fr);
+    align-content: start;
+    align-items: start;
+    gap: var(--sp-8);
+
+    @media (--mobile) {
+        gap: var(--sp-4);
+    }
+
+    /* Both columns would drop below 400px: stack them */
+    @media (--one-col) {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    &:before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: var(--zz-top);
+        pointer-events: none;
+    }
+}
+
+.main--login .card {
+    place-self: center;
+}
+
+@media (--not-mobile) {
+    body,
+    html {
+        overscroll-behavior: none;
+    }
+}
+
+h1 {
+    font-variation-settings: var(--fv-semi-bold-italic);
+    font-size: var(--fs-10);
+    letter-spacing: -0.1em;
+}
+
+h2 {
+    font-variation-settings: var(--fv-semi-bold-italic);
+    font-size: var(--fs-8);
+    letter-spacing: -0.02em;
+}
+
+:is(.left, .right, .card, .notice) {
+    box-shadow: 0 0 64px 0 rgba(0, 0, 0, 0.25) inset;
+    background-color: var(--clr-light-grey);
+}
+
+:is(.left, .right, .card, .notice) {
+    border-radius: var(--r-10);
+    padding: var(--sp-8) var(--sp-10);
+
+    @media (--mobile) {
+        padding: calc(var(--sp-10) * 1) var(--sp-10);
+    }
+
+    text-align: center;
+}
+
+.left,
+.right {
+    padding: var(--sp-6);
+
+    @media (--mobile) {
+        padding: var(--sp-10) var(--sp-6);
+    }
+}
+
+.left {
+    position: sticky;
+    top: var(--mg-page);
+
+    /* Stacked: a sticky nav card would cover the content */
+    @media (--one-col) {
+        position: static;
+    }
+    padding-bottom: var(--sp-10);
+
+    @media (--mobile) {
+        display: contents;
+    }
+
+    @media (--not-mobile) {
+        display: flex;
+        flex-direction: column;
+        gap: var(--sp-6);
+    }
+}
+
+/* Page load: only the content column pops in (overshooting ease).
+   The nav stays put between pages: its own view-transition group, not animated. */
+.right {
+    animation: pop-in 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 80ms backwards;
+}
+
+.left {
+    view-transition-name: nav;
+}
+
+::view-transition-group(nav),
+::view-transition-old(nav),
+::view-transition-new(nav) {
+    animation: none;
+}
+
+.right .card:last-child:has(> .card),
+.right {
+    padding-bottom: var(--sp-6);
+}
+
+/* Mobile: .left is display: contents, so the "Menu" button stays put instead */
+@media (--mobile) {
+    .cta--menu {
+        view-transition-name: nav;
+        position: sticky !important;
+        top: var(--mg-page);
+    }
+}
+
+@keyframes pop-in {
+    from {
+        opacity: 0;
+        scale: 0.96;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    @keyframes pop-in {
+        from {
+            opacity: 0;
+        }
+    }
+}
+
+.card .card {
+    width: calc(100% + var(--sp-6) * 2);
+    place-self: center;
+}
+
+/* Nav */
+
+.nav {
+    position: sticky;
+    top: var(--sp-8);
+
+    @media (--small) {
+        position: static;
+        justify-content: space-between;
+    }
+
+    &__logo {
+        font-weight: var(--fw-bold);
+        text-decoration: none;
+        margin-bottom: var(--sp-4);
+    }
+
+    &__list {
+        list-style: none;
+        padding: 0;
+
+        @media (--small) {
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: var(--sp-4);
+        }
+
+        & a {
+            text-decoration: none;
+            color: var(--clr-grey);
+
+            &:is(:hover, :focus-visible, [aria-current="page"]) {
+                color: var(--clr-black);
+            }
+        }
+
+        .cta:has([aria-current="page"]) {
+            background-color: var(--clr-mid-grey);
+        }
+    }
+}
+
+.notice {
+    padding: var(--sp-6);
+
+    width: fit-content;
+    place-self: center;
+
+    &--success {
+        background-color: color-mix(in oklch, chartreuse 20%, transparent);
+    }
+
+    &--error {
+        background-color: color-mix(in oklch, rebeccapurple 20%, transparent);
+    }
+
+    /* Toast (notice.php, base.js): bottom center, clear of the mobile "Menu" button at the top */
+    &--toast {
+        position: fixed;
+        left: 50%;
+        bottom: calc(var(--mg-page) * 2);
+        z-index: calc(var(--zz-top) + 1);
+        translate: -50% 0;
+
+        max-width: calc(100vw - 4 * var(--mg-page));
+        padding: var(--sp-4) var(--sp-6);
+        cursor: pointer;
+
+        backdrop-filter: blur(20px);
+        animation: toast-in var(--ts-3) both;
+
+        &.is-leaving {
+            animation: toast-out var(--ts-3) both;
+        }
+
+        /* Opaque tints: the toast sits on top of content */
+        &.notice--success {
+            background-color: color-mix(
+                in oklch,
+                chartreuse 20%,
+                var(--clr-light-grey)
+            );
+        }
+
+        &.notice--error {
+            background-color: color-mix(
+                in oklch,
+                rebeccapurple 20%,
+                var(--clr-light-grey)
+            );
+        }
+    }
+}
+
+/* Forms */
+
+label {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+
+    font-size: var(--fs-2);
+    font-variation-settings: var(--fv-reg-reg);
+}
+
+input,
+select,
+textarea {
+    padding: var(--sp-6);
+    border-radius: var(--r-10);
+    width: 100%;
+    outline: none;
+    border: none;
+    background-color: var(--clr-light-grey);
+
+    box-shadow: 0 0 17px 0 rgba(0, 0, 0, 0.25) inset;
+
+    font-size: var(--fs-2);
+    font-variation-settings: var(--fv-reg-bold);
+
+    &:focus-visible {
+        outline: 2px solid var(--clr-black);
+        outline-offset: 1px;
+    }
+
+    &:disabled {
+        background-color: var(--clr-light-grey);
+        color: var(--clr-grey);
+    }
+}
+
+textarea {
+    resize: vertical;
+    font-family: inherit;
+    text-align: center;
+}
+
+fieldset {
+    border: 0;
+    padding: 0;
+    margin: 0;
+}
+
+/* Impressum, Datenschutz, Abmelden: one small group below the menu */
+.nav__meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--sp-2) var(--sp-4);
+}
+
+/* Mobile menu (nav.php, base.js) */
+
+.nav-dialog {
+    overflow: hidden;
+
+    /* Desktop: a plain part of the left column */
+    @media (--not-mobile) {
+        &,
+        &:not([open]) {
+            display: contents;
+        }
+    }
+
+    @media (--mobile) {
+        /* Whole screen, page margin all around (like .main) */
+        position: fixed;
+        inset: var(--mg-page);
+        margin: 0;
+        width: auto;
+        height: auto;
+        max-width: none;
+        max-height: none;
+        padding: var(--sp-6);
+        border: none;
+        border-radius: var(--r-10);
+
+        flex-direction: column;
+        justify-content: space-between;
+
+        background-color: color-mix(
+            in oklch,
+            var(--clr-light-grey) 95%,
+            transparent
+        );
+        box-shadow: 0 0 64px 0 rgba(0, 0, 0, 0.45) inset;
+        backdrop-filter: blur(20px);
+        color: inherit;
+        text-align: center;
+        overflow-y: auto;
+
+        opacity: 0;
+        scale: 0.9;
+        transition:
+            opacity var(--ts-2),
+            scale var(--ts-2),
+            display var(--ts-2) allow-discrete,
+            overlay var(--ts-2) allow-discrete;
+
+        /* Only when open: any display value here would also show the closed dialog */
+        &[open] {
+            display: flex;
+            opacity: 1;
+            scale: 1;
+        }
+
+        /* Hex instead of var(): older browsers don't pass custom properties to ::backdrop */
+        &::backdrop {
+            background-color: transparent;
+            backdrop-filter: blur(0);
+            transition:
+                background-color var(--ts-2),
+                backdrop-filter var(--ts-2),
+                display var(--ts-2) allow-discrete,
+                overlay var(--ts-2) allow-discrete;
+        }
+
+        &[open]::backdrop {
+            background-color: color-mix(in oklch, #e4e1e5 20%, transparent);
+            backdrop-filter: blur(20px);
+        }
+
+        /* Fade-out before close() (base.js): iOS Safari drops the dialog at once otherwise */
+        &[open].is-closing {
+            opacity: 0;
+            scale: 0.9;
+        }
+
+        &[open].is-closing::backdrop {
+            background-color: transparent;
+            backdrop-filter: blur(0);
+        }
+
+        & .nav {
+            margin-top: var(--sp-6);
+        }
+    }
+}
+
+@media (--mobile) {
+    @starting-style {
+        .nav-dialog[open] {
+            opacity: 0;
+            scale: 0.9;
+        }
+
+        .nav-dialog[open]::backdrop {
+            background-color: transparent;
+            backdrop-filter: blur(0);
+        }
+    }
+
+    /* "Menu" button stays at the top while scrolling (.left is display: contents here) */
+    .cta--menu {
+        position: sticky;
+        top: var(--mg-page);
+        z-index: var(--z-mid);
+        background-color: var(--clr-light-grey);
+    }
+}
+
+html:has(.nav-dialog[open]) {
+    overflow: hidden;
+}
+
+@keyframes toast-in {
+    from {
+        opacity: 0;
+        translate: -50% 100%;
+    }
+}
+
+@keyframes toast-out {
+    to {
+        opacity: 0;
+        translate: -50% 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    @keyframes toast-in {
+        from {
+            opacity: 0;
+        }
+    }
+
+    @keyframes toast-out {
+        to {
+            opacity: 0;
+        }
+    }
+}
+
+/* Modal (main-info.php: <dialog class="modal">, opened by [data-dialog], closed by [data-close]) */
+
+.modal {
+    /* Browser centres modal dialogs with margin: auto; reset.css sets margin: 0 */
+    margin: auto;
+    width: min(calc(100vw - 4 * var(--mg-page)), 480px);
+    max-height: calc(100dvh - 4 * var(--mg-page));
+    padding: var(--sp-8) var(--sp-6);
+    border: none;
+    border-radius: var(--r-10);
+
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-4);
+
+    background-color: color-mix(
+        in oklch,
+        var(--clr-light-grey) 95%,
+        transparent
+    );
+    box-shadow: 0 0 64px 0 rgba(0, 0, 0, 0.45) inset;
+    backdrop-filter: blur(20px);
+    color: inherit;
+    text-align: center;
+    overflow-y: auto;
+
+    opacity: 0;
+    scale: 0.9;
+    transition:
+        opacity var(--ts-2),
+        scale var(--ts-2),
+        display var(--ts-2) allow-discrete,
+        overlay var(--ts-2) allow-discrete;
+
+    /* Only when open: any display value here would also show the closed dialog */
+    &[open] {
+        display: flex;
+        opacity: 1;
+        scale: 1;
+    }
+
+    &::backdrop {
+        background-color: transparent;
+        backdrop-filter: blur(0);
+        transition:
+            background-color var(--ts-2),
+            backdrop-filter var(--ts-2),
+            display var(--ts-2) allow-discrete,
+            overlay var(--ts-2) allow-discrete;
+    }
+
+    &[open]::backdrop {
+        background-color: color-mix(in oklch, #e4e1e5 20%, transparent);
+        backdrop-filter: blur(20px);
+    }
+
+    &[open].is-closing {
+        opacity: 0;
+        scale: 0.9;
+    }
+
+    &[open].is-closing::backdrop {
+        background-color: transparent;
+        backdrop-filter: blur(0);
+    }
+}
+
+@starting-style {
+    .modal[open] {
+        opacity: 0;
+        scale: 0.9;
+    }
+
+    .modal[open]::backdrop {
+        background-color: transparent;
+        backdrop-filter: blur(0);
+    }
+}

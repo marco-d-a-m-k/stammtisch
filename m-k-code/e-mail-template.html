@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="supported-color-schemes" content="light dark">
+    <title>{{title}}</title>
+    <style>
+        :root { color-scheme: light dark; supported-color-schemes: light dark; }
+
+        @media (prefers-color-scheme: dark) {
+            .st-text { color: #ecebed !important; }
+            .st-muted { color: #a9a6ab !important; }
+            .st-btn { color: #ecebed !important; border-color: rgba(236, 235, 237, 0.3) !important; box-shadow: inset 0 0 17px 0 rgba(255, 255, 255, 0.2) !important; }
+            .st-card { border-color: rgba(236, 235, 237, 0.2) !important; box-shadow: inset 0 0 64px 0 rgba(255, 255, 255, 0.15) !important; }
+        }
+
+        /* Outlook.com dark mode */
+        [data-ogsc] .st-text { color: #ecebed !important; }
+        [data-ogsc] .st-muted { color: #a9a6ab !important; }
+        [data-ogsc] .st-btn { color: #ecebed !important; border-color: rgba(236, 235, 237, 0.3) !important; }
+        [data-ogsc] .st-card { border-color: rgba(236, 235, 237, 0.2) !important; }
+    </style>
+</head>
+
+<!-- No background: the mail app's own light or dark background shows through.
+     Text colors switch via the classes above. Box shadows are dropped by some mail apps (Gmail), so buttons also get a thin border. -->
+
+<body style="margin:0;padding:0;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+            <td align="center" style="padding:24px 12px;">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;">
+                    <tr>
+                        <td align="center" class="st-text st-card" style="padding:70px 40px;border-radius:100px;border:1px solid rgba(25,25,25,0.12);box-shadow:inset 0 0 64px 0 rgba(0,0,0,0.25);font-family:Helvetica,Arial,sans-serif;font-size:17px;line-height:1.45;color:#191919;text-align:center;">
+                            {{content}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" style="padding:20px 0 0;font-family:Helvetica,Arial,sans-serif;font-size:13px;">
+                            <a href="{{url}}" class="st-text" style="color:#191919;text-decoration:none;text-transform:uppercase;letter-spacing:0.04em;">{{site}}</a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

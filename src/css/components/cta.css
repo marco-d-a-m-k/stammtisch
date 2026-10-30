@@ -1,0 +1,94 @@
+.cta {
+    display: block;
+    width: fit-content;
+
+    padding: 20px 40px;
+    border-radius: var(--r-10);
+    border: none;
+
+    color: var(--clr-black);
+    box-shadow: 0 0 17px 0 rgba(0, 0, 0, 0.25) inset;
+
+    text-transform: uppercase;
+
+    font-size: var(--fs-4);
+    font-variation-settings: var(--fv-semi-bold);
+
+    @media (--mobile) {
+        font-size: calc(var(--fs-2) * 1.2);
+    }
+
+    place-self: center;
+    text-decoration: none;
+
+    position: relative;
+
+    a:after {
+        content: "";
+        position: absolute;
+        inset: 0;
+    }
+
+    @media (hover) {
+        transition: box-shadow var(--ts-2);
+
+        &:is(:hover, :focus-visible) {
+            box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.25) inset;
+        }
+
+        &:active {
+            box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.55) inset;
+        }
+    }
+}
+
+.cta--radio {
+    cursor: pointer;
+    width: 100%;
+
+    &:has(:checked) {
+        box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.55) inset;
+    }
+
+    &:has(:focus-visible) {
+        outline: 2px solid var(--clr-black);
+        outline-offset: 2px;
+    }
+}
+
+.cta--logout {
+    font-variation-settings: var(--fv-semi-reg);
+    text-decoration: none;
+
+    transform: font-variation-settings var(--ts-2);
+
+    &:hover {
+        font-variation-settings: var(--fv-semi-bold);
+    }
+}
+
+.tag {
+    font-size: var(--fs-2);
+    padding: var(--sp-2);
+    background-color: var(--clr-mid-grey);
+    border-radius: var(--r-10);
+}
+
+/* Round "i" tag that opens a .modal */
+.tag--info {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 1;
+    min-width: 2.5em;
+
+    border: none;
+    color: inherit;
+    font-family: inherit;
+    font-variation-settings: var(--fv-mono-reg);
+    cursor: pointer;
+
+    &:focus-visible {
+        outline: 2px solid var(--clr-black);
+        outline-offset: 2px;
+    }
+}

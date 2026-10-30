@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200" fill="none"><metadata><rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/"><rdf:Description><dc:creator>RealFaviconGenerator</dc:creator><dc:source>https://realfavicongenerator.net</dc:source></rdf:Description></rdf:RDF></metadata><g filter="url(#filter0_i_7_8)">
+<rect width="200" height="200" rx="29" fill="#F0ECF1"></rect>
+<path d="M128.854 74.034H105.372L108.42 59.5834H172.206L169.271 74.034H145.676L131.564 140.417H114.742L128.854 74.034Z" fill="#191919"></path>
+<path d="M58.7274 141.771C48.8679 141.771 41.3792 139.513 36.2612 134.998C31.1433 130.407 28.3209 123.746 27.7941 115.015L44.1639 113.209C44.5402 118.327 46.1208 122.015 48.9055 124.273C51.6903 126.53 55.3782 127.659 59.9693 127.659C64.0335 127.659 67.2322 126.869 69.5654 125.289C71.8986 123.708 73.2533 121.488 73.6297 118.628C73.9307 116.144 73.4039 113.999 72.0491 112.193C70.6944 110.386 68.2107 108.731 64.598 107.225L53.76 102.935C47.4379 100.376 42.9221 96.9518 40.2126 92.6618C37.5783 88.3717 36.7881 83.442 37.8418 77.8725C38.5191 74.4103 40.062 71.2116 42.4705 68.2763C44.8789 65.2658 48.2282 62.8574 52.5182 61.051C56.8082 59.1694 61.9638 58.2286 67.9849 58.2286C73.8554 58.2286 78.7852 59.0942 82.7742 60.8252C86.8384 62.5563 89.9619 65.1905 92.1445 68.7279C94.4024 72.2653 95.6443 76.7059 95.8701 82.0496L79.1615 83.1786C78.9357 79.6412 77.7692 76.894 75.6618 74.9372C73.6297 72.9803 70.4686 72.0019 66.1785 72.0019C62.5659 72.0019 59.7435 72.7545 57.7114 74.2598C55.7545 75.7651 54.5879 77.4961 54.2116 79.453C53.9106 81.5604 54.4374 83.4043 55.7922 84.9849C57.1469 86.4902 59.5553 87.9202 63.0175 89.2749L74.9844 94.0165C81.4571 96.5755 85.9353 100.301 88.419 105.193C90.9779 110.01 91.6177 115.279 90.3382 120.999C89.5103 124.912 87.7792 128.45 85.145 131.611C82.586 134.697 79.0863 137.18 74.6457 139.062C70.2052 140.868 64.8991 141.771 58.7274 141.771Z" fill="#191919"></path>
+</g><defs>
+<filter id="filter0_i_7_8" x="0" y="0" width="200" height="200" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix>
+<feOffset></feOffset>
+<feGaussianBlur stdDeviation="32"></feGaussianBlur>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"></feComposite>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"></feColorMatrix>
+<feBlend mode="normal" in2="shape" result="effect1_innerShadow_7_8"></feBlend>
+</filter>
+</defs></svg>

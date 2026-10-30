@@ -1,0 +1,94 @@
+* {
+    margin: 0;
+    padding: 0;
+    font: inherit;
+    font-kerning: normal;
+    font-feature-settings: inherit;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: inherit;
+    letter-spacing: inherit;
+    color: inherit;
+
+    box-sizing: border-box;
+}
+
+html {
+    hanging-punctuation: first last;
+}
+
+body {
+    min-height: 100svh;
+}
+
+img,
+picture,
+svg,
+video {
+    height: auto;
+    max-width: 100%;
+    display: block;
+}
+
+img {
+    object-fit: cover;
+    font-style: italic;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+}
+
+figure,
+img {
+    height: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-wrap: balance;
+}
+
+p {
+    text-wrap: pretty;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+a:not([class]) {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    background-color: unset;
+    border-color: transparent;
+    cursor: pointer;
+}
+
+summary::-webkit-details-marker {
+    display: none;
+}
+
+summary {
+    list-style: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    :has(:target) {
+        scroll-behavior: smooth;
+        scroll-padding-top: var(--sp-top);
+    }
+}
+
+.altcha-widget-wrap,
+.altcha {
+    display: none !important;
+}

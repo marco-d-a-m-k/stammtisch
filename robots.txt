@@ -1,0 +1,10 @@
+User-agent: *
+
+Disallow: /wp-admin/
+Allow: /wp-admin/admin-ajax.php
+Disallow: /?s=
+
+Disallow: /author/
+Disallow: /categories/
+
+Disallow: /tag/
